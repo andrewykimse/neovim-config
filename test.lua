@@ -1,0 +1,1 @@
+print("Neovim config test")
