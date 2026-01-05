@@ -8,7 +8,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("mason").setup()
-      require("lazy").setup({"KostkaBrukowa/definition-or-references.nvim"})
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       local ok_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
       if ok_cmp then
