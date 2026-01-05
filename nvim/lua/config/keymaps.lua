@@ -10,3 +10,4 @@ vim.keymap.set("n", "<A-j>", "<C-w>-", { desc = "Resize down" })
 vim.keymap.set("n", "<A-k>", "<C-w>+", { desc = "Resize up" })
 vim.keymap.set("n", "<A-l>", "<C-w>>", { desc = "Resize right" })
 
+vim.keymap.set("n", "gd", require("definition-or-references").definition_or_references, { silent = true })
