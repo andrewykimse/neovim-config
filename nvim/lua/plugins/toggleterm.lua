@@ -7,7 +7,7 @@ return {
     -- https://github.com/akinsho/toggleterm.nvim#configuration
     require("toggleterm").setup({
       size = 20, -- The size of the terminal window.
-      open_mapping = [[<c-\>]], -- The keymap to open/close the terminal.
+      open_mapping = [[<c-t>]], -- The keymap to open/close the terminal.
       hide_numbers = true, -- Hide the number column in the terminal.
       shade_filetypes = {}, -- Filetypes that should be shaded.
       shade_termcolors = {}, -- Colors that should be shaded.
