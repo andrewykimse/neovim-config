@@ -30,22 +30,22 @@ return {
   opts = {
     -- Your LSP Zero specific configuration goes here.
     -- For example:
-    // setup = {
-    //   lsp = {
-    //     -- Enable the recommended LSP servers.
-    //     -- See `:help lsp-zero-configuration` for a full list.
-    //     servers = {
-    //       "clangd",
-    //       "pyright",
-    //       "tsserver",
-    //     },
-    //   },
-    //   completion = {
-    //     -- Enable the nvim-cmp.
-    //     -- See `:help lsp-zero-completion` for a full list.
-    //     autocomplete = true,
-    //     hints = true,
-    //   },
-    // },
+    setup = {
+      lsp = {
+        -- Enable the recommended LSP servers.
+        -- See `:help lsp-zero-configuration` for a full list.
+        servers = {
+          "clangd",
+          "pyright",
+          "tsserver",
+        },
+      },
+      completion = {
+        -- Enable the nvim-cmp.
+        -- See `:help lsp-zero-completion` for a full list.
+        autocomplete = true,
+        hints = true,
+      },
+    },
   },
 }
