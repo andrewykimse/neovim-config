@@ -29,17 +29,19 @@ neovim-config/
 ### Quick Install (System-wide)
 ```bash
 # Install directly from GitHub
-nix profile install github:yourusername/neovim-config
+nix profile install github:andrewykimse/neovim-config
 
-# Or use the install script
-curl -sSL https://raw.githubusercontent.com/yourusername/neovim-config/main/install.sh | bash
+# Install from cloned repo
+git clone https://github.com/andrewykimse/neovim-config
+cd neovim-config
+nix profile install .
 ```
 
 ## Usage
 
 ### Run Neovim directly (without installing)
 ```bash
-nix run github:yourusername/neovim-config
+nix run github:andrewykimse/neovim-config
 ```
 
 ### Enter development shell
