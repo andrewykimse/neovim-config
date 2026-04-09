@@ -2,20 +2,35 @@ return {
   {
     "mfussenegger/nvim-dap",
     lazy = true,
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+      "theHamsta/nvim-dap-virtual-text",
+    },
     keys = {
-      { "<F5>", ":lua require('dap').continue()<CR>", desc = "Start/Continue Debugging" },
-      { "<F10>", ":lua require('dap').step_over()<CR>", desc = "Step Over" },
-      { "<F11>", ":lua require('dap').step_into()<CR>", desc = "Step Into" },
-      { "<F12>", ":lua require('dap').step_out()<CR>", desc = "Step Out" },
-      { "<Leader>b", ":lua require('dap').toggle_breakpoint()<CR>", desc = "Toggle Breakpoint" },
-      { "<Leader>B", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", desc = "Set Conditional Breakpoint" },
-      { "<Leader>dr", ":lua require('dap').repl.open()<CR>", desc = "Open REPL" },
-      { "<Leader>dl", ":lua require('dap').run_last()<CR>", desc = "Run Last Debug Session" },
+      { "<F5>",       function() require("dap").continue() end,                                                     desc = "Start/Continue Debugging" },
+      { "<F10>",      function() require("dap").step_over() end,                                                    desc = "Step Over" },
+      { "<F11>",      function() require("dap").step_into() end,                                                    desc = "Step Into" },
+      { "<F12>",      function() require("dap").step_out() end,                                                     desc = "Step Out" },
+      { "<Leader>b",  function() require("dap").toggle_breakpoint() end,                                            desc = "Toggle Breakpoint" },
+      { "<Leader>B",  function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,         desc = "Set Conditional Breakpoint" },
+      { "<Leader>dr", function() require("dap").repl.open() end,                                                    desc = "Open REPL" },
+      { "<Leader>dl", function() require("dap").run_last() end,                                                     desc = "Run Last Debug Session" },
+      { "<Leader>du", function() require("dapui").toggle() end,                                                     desc = "Toggle DAP UI" },
+      { "<Leader>de", function() require("dapui").eval() end,                                                       desc = "Evaluate Expression",        mode = { "n", "v" } },
     },
     config = function()
       local dap = require("dap")
+      local dapui = require("dapui")
 
-      -- Debug Configurations for C++ (and C)
+      -- Adapters
+      dap.adapters.lldb = {
+        type = "executable",
+        command = "/usr/bin/lldb-dap", -- adjust if needed (e.g. /opt/homebrew/opt/llvm/bin/lldb-dap)
+        name = "lldb",
+      }
+
+      -- Configurations
       dap.configurations.cpp = {
         {
           name = "Launch Program",
@@ -26,13 +41,52 @@ return {
           end,
           cwd = "${workspaceFolder}",
           stopOnEntry = false,
-          args = {}, -- Pass arguments here if needed
-          runInTerminal = false,
+          args = {},
+        },
+        {
+          name = "Attach to Process",
+          type = "lldb",
+          request = "attach",
+          pid = require("dap.utils").pick_process,
+          args = {},
         },
       }
-
-      -- Use the same configuration for C
       dap.configurations.c = dap.configurations.cpp
+
+      -- UI
+      dapui.setup({
+        icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
+        layouts = {
+          {
+            elements = {
+              { id = "scopes",      size = 0.4 },
+              { id = "breakpoints", size = 0.2 },
+              { id = "stacks",      size = 0.2 },
+              { id = "watches",     size = 0.2 },
+            },
+            size = 40,
+            position = "left",
+          },
+          {
+            elements = {
+              { id = "repl",    size = 0.5 },
+              { id = "console", size = 0.5 },
+            },
+            size = 10,
+            position = "bottom",
+          },
+        },
+      })
+
+      -- Auto-open/close UI
+      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+      dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+      dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+
+      -- Virtual text
+      require("nvim-dap-virtual-text").setup({
+        commented = true,
+      })
     end,
   },
 }
