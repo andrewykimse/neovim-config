@@ -39,5 +39,16 @@ return {
       },
     },
   },
+
+  -- Bracket pair colorization and matching
+  {
+    "utilyre/sentiment.nvim",
+    version = "*",
+    event = "VeryLazy",
+    opts = {},
+    init = function()
+      vim.g.loaded_matchparen = 1
+    end,
+  },
 }
 
