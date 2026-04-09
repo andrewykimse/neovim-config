@@ -54,6 +54,7 @@
             # Development tools and LSPs that your config uses
             git
             curl  # For lazy.nvim plugin downloads
+            nodejs  # Includes npm
             
             # LSP servers (based on your mason config)
             lua-language-server
