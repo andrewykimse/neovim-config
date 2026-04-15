@@ -24,31 +24,33 @@ return {
       local dapui = require("dapui")
 
       -- Adapters
-      dap.adapters.lldb = {
+      dap.adapters.gdb = {
         type = "executable",
-        command = "/usr/bin/lldb-dap", -- adjust if needed (e.g. /opt/homebrew/opt/llvm/bin/lldb-dap)
-        name = "lldb",
+        command = "gdb",
+        args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
       }
 
       -- Configurations
       dap.configurations.cpp = {
         {
           name = "Launch Program",
-          type = "lldb",
+          type = "gdb",
           request = "launch",
           program = function()
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
           end,
+          args = function()
+            local input = vim.fn.input("Arguments: ")
+            return vim.split(input, " ", { trimempty = true })
+          end,
           cwd = "${workspaceFolder}",
-          stopOnEntry = false,
-          args = {},
+          stopAtBeginningOfMainSubprogram = false,
         },
         {
           name = "Attach to Process",
-          type = "lldb",
+          type = "gdb",
           request = "attach",
           pid = require("dap.utils").pick_process,
-          args = {},
         },
       }
       dap.configurations.c = dap.configurations.cpp
