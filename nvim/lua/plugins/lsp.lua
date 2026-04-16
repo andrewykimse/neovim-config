@@ -14,19 +14,23 @@ return {
         capabilities = cmp_lsp.default_capabilities(capabilities)
       end
 
-      local on_attach = function(_, bufnr)
-        local nmap = function(keys, func, desc)
-          if desc then desc = "LSP: " .. desc end
-          vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-        end
-        nmap("gd", vim.lsp.buf.definition, "Go to definition")
-        nmap("gr", vim.lsp.buf.references, "References")
-        nmap("K", vim.lsp.buf.hover, "Hover")
-        nmap("<leader>rn", vim.lsp.buf.rename, "Rename")
-        nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
-        nmap("[d", vim.diagnostic.goto_prev, "Prev diagnostic")
-        nmap("]d", vim.diagnostic.goto_next, "Next diagnostic")
-      end
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+        callback = function(ev)
+          local bufnr = ev.buf
+          local nmap = function(keys, func, desc)
+            if desc then desc = "LSP: " .. desc end
+            vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+          end
+          nmap("gd", vim.lsp.buf.definition, "Go to definition")
+          nmap("gr", vim.lsp.buf.references, "References")
+          nmap("K", vim.lsp.buf.hover, "Hover")
+          nmap("<leader>rn", vim.lsp.buf.rename, "Rename")
+          nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          nmap("[d", vim.diagnostic.goto_prev, "Prev diagnostic")
+          nmap("]d", vim.diagnostic.goto_next, "Next diagnostic")
+        end,
+      })
 
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "ts_ls", "pyright", "clangd" },
@@ -35,13 +39,22 @@ return {
           function(server_name)
             require("lspconfig")[server_name].setup({
               capabilities = capabilities,
-              on_attach = on_attach,
+            })
+          end,
+          ["clangd"] = function()
+            require("lspconfig").clangd.setup({
+              capabilities = capabilities,
+              cmd = {
+                "clangd",
+                "--query-driver=/nix/store/*/bin/clang++,/nix/store/*/bin/clang",
+                "--compile-commands-dir=build",
+                "--background-index",
+              },
             })
           end,
           ["lua_ls"] = function()
             require("lspconfig").lua_ls.setup({
               capabilities = capabilities,
-              on_attach = on_attach,
               settings = {
                 Lua = {
                   diagnostics = { globals = { "vim" } },
