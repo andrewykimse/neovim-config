@@ -7,6 +7,7 @@ return {
       { "<leader>x", group = "diagnostics" },
       { "<leader>d", group = "debug" },
       { "<leader>c", group = "code" },
+      { "<leader>g", group = "git" },
     },
   },
   keys = {
