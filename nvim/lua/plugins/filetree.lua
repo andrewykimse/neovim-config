@@ -6,7 +6,7 @@ return {
     },
     config = function()
       require("nvim-tree").setup({
-        view = { width = 30 },
+        view = { width = 70 },
         renderer = { icons = { show = { file = true, folder = true } } },
       })
     end,
