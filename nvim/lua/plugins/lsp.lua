@@ -26,7 +26,7 @@ return {
           nmap("gr", vim.lsp.buf.references, "References")
           nmap("K", vim.lsp.buf.hover, "Hover")
           nmap("<leader>rn", vim.lsp.buf.rename, "Rename")
-          nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          nmap("<leader>la", vim.lsp.buf.code_action, "Code action")
           nmap("[d", vim.diagnostic.goto_prev, "Prev diagnostic")
           nmap("]d", vim.diagnostic.goto_next, "Next diagnostic")
         end,
