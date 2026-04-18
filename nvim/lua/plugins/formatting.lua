@@ -4,7 +4,7 @@ return {
   cmd = { "ConformInfo" },
   keys = {
     {
-      "<leader>cf",
+      "<leader>lf",
       function()
         require("conform").format({ async = true })
       end,
@@ -12,7 +12,7 @@ return {
       desc = "Format buffer",
     },
     {
-      "<leader>cF",
+      "<leader>lF",
       function()
         local overseer = require("overseer")
         local task = overseer.new_task({

@@ -90,9 +90,9 @@ return {
   "stevearc/overseer.nvim",
   cmd = { "OverseerRun", "OverseerToggle" },
   keys = {
-    { "<leader>cb", function() ninja_build("build", "Release") end, desc = "Build (release)" },
-    { "<leader>cB", function() ninja_build("build-debug", "Debug") end, desc = "Build (debug)" },
-    { "<leader>ct", "<cmd>OverseerToggle<cr>", desc = "Toggle task list" },
+    { "<leader>bb", function() ninja_build("build", "Release") end, desc = "Build (release)" },
+    { "<leader>bB", function() ninja_build("build-debug", "Debug") end, desc = "Build (debug)" },
+    { "<leader>bt", "<cmd>OverseerToggle<cr>", desc = "Toggle task list" },
   },
   opts = {
     task_list = {
