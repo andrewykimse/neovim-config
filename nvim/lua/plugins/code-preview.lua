@@ -8,6 +8,5 @@ return {
         show_full_file = true,
       },
     })
-    vim.keymap.set("n", "<leader>cp", "<cmd>CodePreview<cr>", { desc = "Code Preview" })
   end,
 }
