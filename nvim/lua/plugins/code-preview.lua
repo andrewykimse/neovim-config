@@ -1,9 +1,6 @@
 return {
   "Cannon07/code-preview.nvim",
   lazy = false,
-  keys = {
-    { "<leader>cp", "<cmd>CodePreview<cr>", desc = "Code Preview" },
-  },
   config = function()
     require("code-preview").setup({
       diff = {
@@ -11,5 +8,6 @@ return {
         show_full_file = true,
       },
     })
+    vim.keymap.set("n", "<leader>cp", "<cmd>CodePreview<cr>", { desc = "Code Preview" })
   end,
 }
