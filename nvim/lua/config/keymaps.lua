@@ -9,6 +9,15 @@ vim.keymap.set("n", "<A-l>", "<C-w>>", { desc = "Resize right" })
 -- Buffer management
 vim.keymap.set("n", "<leader>q", "<cmd>bd<CR>", { desc = "Close current buffer" })
 
+-- Open btop in a tmux pane
+vim.keymap.set("n", "<leader>bt", function()
+  if vim.env.TMUX == nil then
+    vim.notify("Not in a tmux session", vim.log.levels.ERROR)
+    return
+  end
+  vim.fn.system("tmux split-window -h -l 80 'btop'")
+end, { desc = "Open btop" })
+
 -- Copy file:line to clipboard
 vim.keymap.set("n", "<leader>yp", function()
   vim.fn.setreg("+", vim.fn.expand("%:.") .. ":" .. vim.fn.line("."))
