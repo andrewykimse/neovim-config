@@ -20,7 +20,7 @@ return {
   keys = {
     { "<leader>bp", "<cmd>BufferLinePick<cr>", desc = "Pick buffer" },
     { "<leader>bc", "<cmd>BufferLinePickClose<cr>", desc = "Pick close buffer" },
-    { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous buffer" },
-    { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+    { "<S-j>", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous buffer" },
+    { "<S-k>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
   },
 }
