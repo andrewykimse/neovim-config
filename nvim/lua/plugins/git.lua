@@ -11,6 +11,7 @@ return {
             { "<leader>gc", function() require("neogit").open({ "commit" }) end, desc = "Neogit commit" },
             { "<leader>gl", function() require("neogit").open({ "log" }) end,    desc = "Neogit log" },
             { "<leader>gP", function() require("neogit").open({ "push" }) end,   desc = "Neogit push" },
+            { "<leader>gp", function() require("neogit").open({ "pull" }) end,   desc = "Neogit pull" },
             { "<leader>gb", "<cmd>Telescope git_branches<cr>",                   desc = "Switch branch" },
             { "<leader>gt", "<cmd>Telescope git_stash<cr>",                      desc = "Git stash" },
             { "<leader>gf", "<cmd>Telescope git_status<cr>",                     desc = "Git status (files)" },
