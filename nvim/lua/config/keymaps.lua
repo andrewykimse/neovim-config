@@ -15,7 +15,7 @@ vim.keymap.set("n", "<leader>t", function()
         vim.notify("Not in a tmux session", vim.log.levels.ERROR)
         return
     end
-    vim.fn.system("tmux split-window -h -l 80 'btop'")
+    vim.fn.system("tmux split-window -fh -l 80 'btop'")
 end, { desc = "Open btop" })
 
 -- Copy file:line to clipboard
