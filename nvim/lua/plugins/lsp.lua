@@ -3,7 +3,6 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       local ok_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
       if ok_cmp then
@@ -15,8 +14,7 @@ return {
         callback = function(ev)
           local bufnr = ev.buf
           local nmap = function(keys, func, desc)
-            if desc then desc = "LSP: " .. desc end
-            vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+            vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
           end
           nmap("gd", vim.lsp.buf.definition, "Go to definition")
           nmap("gr", vim.lsp.buf.references, "References")
@@ -28,9 +26,9 @@ return {
         end,
       })
 
-      -- Servers installed via Nix — configured directly, no Mason installer
-      lspconfig.clangd.setup({
-        capabilities = capabilities,
+      vim.lsp.config("*", { capabilities = capabilities })
+
+      vim.lsp.config("clangd", {
         cmd = {
           "clangd",
           "--query-driver=/nix/store/*/bin/clang++,/nix/store/*/bin/clang",
@@ -38,26 +36,24 @@ return {
         },
       })
 
-      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
-
-      lspconfig.gopls.setup({ capabilities = capabilities })
-
-      lspconfig.zls.setup({ capabilities = capabilities })
-
-      lspconfig.nixd.setup({ capabilities = capabilities })
-
-      lspconfig.ts_ls.setup({ capabilities = capabilities })
-
-      lspconfig.pyright.setup({ capabilities = capabilities })
-
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
+      vim.lsp.config("lua_ls", {
         settings = {
           Lua = {
             diagnostics = { globals = { "vim" } },
             workspace = { checkThirdParty = false },
           },
         },
+      })
+
+      vim.lsp.enable({
+        "clangd",
+        "rust_analyzer",
+        "gopls",
+        "zls",
+        "nixd",
+        "ts_ls",
+        "pyright",
+        "lua_ls",
       })
     end,
   },
