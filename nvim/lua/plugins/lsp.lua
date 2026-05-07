@@ -1,13 +1,9 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      require("mason").setup()
+      local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       local ok_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
       if ok_cmp then
@@ -32,40 +28,37 @@ return {
         end,
       })
 
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "ts_ls", "pyright", "clangd" },
-        automatic_installation = true,
-        handlers = {
-          function(server_name)
-            require("lspconfig")[server_name].setup({
-              capabilities = capabilities,
-            })
-          end,
-          ["clangd"] = function()
-            require("lspconfig").clangd.setup({
-              capabilities = capabilities,
-              cmd = {
-                "clangd",
-                "--query-driver=/nix/store/*/bin/clang++,/nix/store/*/bin/clang",
-                "--compile-commands-dir=build",
-                "--background-index",
-              },
-            })
-          end,
-          ["lua_ls"] = function()
-            require("lspconfig").lua_ls.setup({
-              capabilities = capabilities,
-              settings = {
-                Lua = {
-                  diagnostics = { globals = { "vim" } },
-                  workspace = { checkThirdParty = false },
-                },
-              },
-            })
-          end,
+      -- Servers installed via Nix — configured directly, no Mason installer
+      lspconfig.clangd.setup({
+        capabilities = capabilities,
+        cmd = {
+          "clangd",
+          "--query-driver=/nix/store/*/bin/clang++,/nix/store/*/bin/clang",
+          "--background-index",
+        },
+      })
+
+      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+
+      lspconfig.gopls.setup({ capabilities = capabilities })
+
+      lspconfig.zls.setup({ capabilities = capabilities })
+
+      lspconfig.nixd.setup({ capabilities = capabilities })
+
+      lspconfig.ts_ls.setup({ capabilities = capabilities })
+
+      lspconfig.pyright.setup({ capabilities = capabilities })
+
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = { globals = { "vim" } },
+            workspace = { checkThirdParty = false },
+          },
         },
       })
     end,
   },
 }
-
