@@ -102,15 +102,15 @@ vim.keymap.set("v", "<leader>ca", function()
     end)
 end, { desc = "Ask Claude about selection" })
 
--- Ask Claude to review current git diff
+-- Ask Claude to review current file
 vim.keymap.set("n", "<leader>cr", function()
-    local diff = vim.fn.system("git diff HEAD")
-    if vim.v.shell_error ~= 0 or diff == "" then
-        vim.notify("No diff to review", vim.log.levels.INFO)
-        return
-    end
-    tmux_claude("Review this diff for bugs and issues:\n\n" .. diff)
-end, { desc = "Claude review git diff" })
+    local ctx = file_context()
+    if not ctx then return vim.notify("No file open", vim.log.levels.WARN) end
+    tmux_claude("Review this code for bugs, issues, and improvements:\n\n" .. ctx, {
+        system_prompt =
+        "You are an expert code reviewer. Look for bugs, logic errors, performance issues, security concerns, and readability problems. Suggest concrete improvements. Be concise and actionable.",
+    })
+end, { desc = "Claude: review file" })
 
 -- Open a blank Claude session
 vim.keymap.set("n", "<leader>cc", function()
