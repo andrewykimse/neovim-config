@@ -1,20 +1,4 @@
 return {
-  -- Dracula colorscheme (high priority, loads first)
-  {
-    "Mofiqul/dracula.nvim",
-    lazy = false,
-    priority = 1000,
-    name = "dracula",
-    config = function()
-      require("dracula").setup({
-        transparent_bg = false,
-        lualine_bg_color = "#44475a",
-        italics = true,
-      })
-      vim.cmd.colorscheme("dracula")
-    end,
-  },
-  
   -- Statusline (auto-matches Dracula)
   {
     "nvim-lualine/lualine.nvim",
