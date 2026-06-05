@@ -1,11 +1,8 @@
 return {
   {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown" },
-    build = "cd app && npm install",
-    keys = {
-      { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", ft = "markdown", desc = "Markdown Preview Toggle" },
-    },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {},
   },
 }
