@@ -6,16 +6,16 @@ return {
     -- Refer to the toggleterm.nvim documentation for more options:
     -- https://github.com/akinsho/toggleterm.nvim#configuration
     require("toggleterm").setup({
-      size = 20, -- The size of the terminal window.
-      open_mapping = [[<leader>t]], -- The keymap to open/close the terminal.
-      hide_numbers = true, -- Hide the number column in the terminal.
-      shade_filetypes = {}, -- Filetypes that should be shaded.
-      shade_termcolors = {}, -- Colors that should be shaded.
-      persist_size = true, -- Persist the size of the terminal window.
-      direction = "float", -- 'float', 'vertical', or 'horizontal'
-      close_on_exit = true, -- Close the terminal when the process exits.
-      -- ... more options can be found in the documentation
+      size = 20,
+      hide_numbers = true,
+      shade_filetypes = {},
+      shade_termcolors = {},
+      persist_size = true,
+      direction = "float",
+      close_on_exit = true,
     })
+
+    vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal" })
 
     -- Optional: Bindings for easier navigation between windows
     -- These are example mappings, customize them as you see fit.
