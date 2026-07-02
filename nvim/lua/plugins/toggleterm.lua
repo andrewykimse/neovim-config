@@ -16,6 +16,7 @@ return {
     })
 
     vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal" })
+    vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 
     -- Optional: Bindings for easier navigation between windows
     -- These are example mappings, customize them as you see fit.
