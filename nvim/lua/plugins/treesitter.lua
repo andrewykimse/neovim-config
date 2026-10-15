@@ -1,9 +1,8 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    url = "https://github.com/neovim-treesitter/nvim-treesitter",
-    dependencies = { "neovim-treesitter/treesitter-parser-registry" },
-    lazy = false, -- community fork does not support lazy-loading
+    branch = "main",
+    lazy = false, -- main branch does not support lazy-loading
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").install {
